@@ -3,15 +3,10 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html">
-<f:metadata>
-	<f:viewParam name="id" value="#{productController.currentId}" />
-</f:metadata>
-<h:head></h:head>
+
 <h:body>
 	<h:form>
-		<h3>JSF Application</h3>
-		<h:inputText value="#{productController.product.name}" />
-		<h:commandButton action="#{productController.show}" value="Show" />
+		<h:link value="Lista produktów" outcome="productList" />
 	</h:form>
 </h:body>
 </html>

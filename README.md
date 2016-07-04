@@ -1,1 +1,1 @@
-# jsf-empty-project
+# JavaMasters jsf-workshop

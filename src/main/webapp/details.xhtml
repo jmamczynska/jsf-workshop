@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+<f:metadata>
+	<f:viewParam name="id" value="#{productController.currentId}" />
+</f:metadata>
+<h:head></h:head>
+<h:body>
+	<h:form>
+		<h:panelGrid>
+			<h3>
+				<h:outputLabel value="Podgląd produktu"
+					rendered="#{productController.mode == 'VIEW'}" />
+				<h:outputLabel value="Edycja produktu"
+					rendered="#{productController.mode == 'EDIT'}" />
+				<h:outputLabel value="Dodawanie produktu"
+					rendered="#{productController.mode == 'ADD'}" />
+			</h3>
+		</h:panelGrid>
+
+		<h:panelGrid columns="3">
+			<h:outputText value="ID: "
+				style="width: 90px; display: inline-block;" />
+			<h:inputText id="id" value="#{productController.product.id}" disabled="true" />
+			<h:message for="id" />
+			
+			<h:outputText value="Kod: "
+				style="width: 90px; display: inline-block;" />
+			<h:inputText id="code" value="#{productController.product.code}"
+				disabled="#{productController.mode == 'VIEW'}"
+				validator="#{productController.codePatternValidator}" />
+			<h:message for="code" />
+
+			<h:outputText value="Nazwa: "
+				style="width: 90px; display: inline-block;" />
+			<h:inputText id="name" value="#{productController.product.name}"
+				disabled="#{productController.mode == 'VIEW'}" />
+			<h:message for="name" />
+
+			<h:outputText value="Producent: "
+				style="width: 90px; display: inline-block;" />
+			<h:inputText id="vendor" value="#{productController.product.vendor}"
+				disabled="#{productController.mode == 'VIEW'}" />
+			<h:message for="vendor" />
+
+			<h:outputText value="Cena: "
+				style="width: 90px; display: inline-block;" />
+			<h:inputText id="price" value="#{productController.product.price}"
+				disabled="#{productController.mode == 'VIEW'}">
+				<f:convertNumber maxFractionDigits="2" />
+			</h:inputText>
+			<h:message for="price" />
+
+			<h:outputText value="Data zakupu: "
+				style="width: 90px; display: inline-block;" />
+			<h:inputText id="purchaseDate"
+				value="#{productController.product.purchaseDate}"
+				disabled="#{productController.mode == 'VIEW'}">
+				<f:convertDateTime pattern="dd-MM-yyyy" />
+				<f:validator binding="#{useByDateValidator}"/>
+			</h:inputText>
+			<h:message for="purchaseDate" />
+			
+			<h:outputText value="Opakowanie: "
+				style="width: 90px; display: inline-block;" />
+			<h:selectOneMenu id="packaging" value="#{productController.product.packageType}"				
+				disabled="#{productController.mode == 'VIEW'}" converter="#{packagingConverter}">
+				<f:selectItem itemLabel=" -- " itemValue="#{null}"/>
+				<f:selectItems value="#{productBean.packaging}" var="pck" itemLabel="#{pck.name}" itemValue="#{pck}"/>				
+			</h:selectOneMenu>
+			<h:message for="packaging" />
+		</h:panelGrid>
+
+		<h:commandButton
+			actionListener="#{productController.processProduct}"
+			value="#{productController.mode == 'VIEW' ? 'Edytuj' : 'Zapisz'}"
+			action="#{productController.navigate('test action parameter')}">
+			<f:attribute name="mode" value="edit"/>
+		</h:commandButton>
+
+		<h:commandButton action="productList" actionListener="#{productController.cancel()}"
+			value="Anuluj" immediate="true" />
+
+	</h:form>
+</h:body>
+</html>
