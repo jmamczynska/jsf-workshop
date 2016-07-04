@@ -3,10 +3,13 @@ package pl.course.entity;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+
 public class Product {
 
 	private int id;
 	private String code;
+	@NotNull(message="Podaj nazwe produktu")
 	private String name;
 	private String vendor;
 	private String description;
