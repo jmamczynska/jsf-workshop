@@ -99,7 +99,7 @@ public class ProductController implements Serializable {
 	 */
 	public void codePatternValidator(FacesContext context, UIComponent component, Object object) {
 		String regex = "^(\\w{2}-\\d{3})$";
-		if (!object.toString().matches(regex)) {
+		if (object!= null && !object.toString().matches(regex)) {
 			FacesMessage message = new FacesMessage("Niepoprawny format kodu. Wprowadü kod w formacie AB-123");
 			throw new ValidatorException(message);
 		}
